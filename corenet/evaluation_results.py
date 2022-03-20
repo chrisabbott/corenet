@@ -140,7 +140,8 @@ class QualitativeResults:
     scene_id = scene_id.replace("/", "_")
     image = t.cat(scene_images, dim=0)
     pil_image = PIL.Image.fromarray(image.cpu().numpy())
-    pil_image.save(fl := io.BytesIO(), format="png")
+    fl = io.BytesIO()
+    pil_image.save(fl, format="png")
     fn = fs.join(self.image_output_dir, f"img_{scene_id}.png")
     fs.make_dirs(fs.dirname(fn))
     fs.write_bytes(fn, fl.getvalue())
@@ -266,7 +267,8 @@ class QuantitativeResults:
     return float(mm.iloc[:, 1:-1].T.mean().iou)
 
   def write_csv(self, path: str):
-    self.voxel_metrics_df.to_csv(fl := io.StringIO())
+    fl = io.StringIO()
+    self.voxel_metrics_df.to_csv(fl)
     fs.make_dirs(fs.dirname(path))
     fs.write_text(path, fl.getvalue())
 

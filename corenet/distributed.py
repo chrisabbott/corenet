@@ -56,9 +56,10 @@ def _rendezvous_handler(url_str: str, timeout=t.distributed.default_pg_timeout,
   url = urlparse(url_str)
   if not url.port:
     _error("port number missing")
-  params = dict((p[0], p[1])
-                for pair in url.query.split("&")
-                if len(p := pair.split("=", 1)) == 2)
+  params = {}
+  for pair in url.query.split("&"):
+    if len(pair.split("=", 1) == 2):
+      params[p[0]] = p[1]
   if "rank" not in params:
     _error("rank parameter missing")
   if "world_size" not in params:

@@ -78,7 +78,8 @@ def encode_state(state: State) -> bytes:
       optimizer_state=state.optimizer.state_dict(),
       extra_metadata=state.extra_metadata)
   state = {k.name: getattr(state, k.name) for k in dataclasses.fields(state)}
-  t.save(state, buf := io.BytesIO())
+  buf = io.Bytes()
+  t.save(state, buf)
   return buf.getvalue()
 
 

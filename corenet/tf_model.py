@@ -93,11 +93,10 @@ class TfFrozenGraphModel(super_resolution_lib.MultiOffsetInferenceFn):
 
 def setup_tensorflow(gpu_index: int):
   """Make sure TF uses same GPU as torch and does not consume all memory."""
-  physical_devices = {
-      int(m.group(1)): v
-      for v in tf.config.list_physical_devices("GPU")
-      if (m := re.match(r"/physical_device:GPU:(\d+)", v.name))
-  }
+  physical_devices = {}
+  for v in tf.config.list_physical_devices("GPU"):
+      if (re.match(r"/physical_device:GPU:(\d+)", v.name)):
+          physical_devices[int(m.group(1))] = v
 
   if gpu_index not in physical_devices:
     raise ValueError(
