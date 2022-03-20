@@ -3,8 +3,9 @@
 /output/
 /data/
 /.ipynb_checkpoints/
-/src/corenet/cc/cmake-build-*
-/src/corenet/cc/local_config.cmake
+/corenet/corenet/cc/cmake-build-*
+/corenet/corenet/cc/local_config.cmake
 __pycache__
-/src/build
-/src/dist
+/corenet/build
+/corenet/dist
+/corenet/corenet.egg-info
